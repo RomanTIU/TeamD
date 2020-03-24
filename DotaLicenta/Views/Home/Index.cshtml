@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "Pagina principală";
+}
+<style>
+    img:hover   {opacity:0.5}
+
+
+</style>
+    <div class="jumbotron" style="background-color:transparent">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active">
+                <li data-target="#myCarousel" data-slide-to="1">
+                <li data-target="#myCarousel" data-slide-to="2">
+                </li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="item active">
+                    <img src="~/Content/Image/Dota_Ace_Blue.jpg" class="img-rounded" />
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1>
+                                
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="~/Content/Image/Dota_Fire.jpg" />
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1>
+                                <li>@Html.ActionLink("Go to player", "Index", "Players") </li>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="~/Content/Image/Dota_Juggernaut_Front.jpg" />
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1>
+                                <li>@Html.ActionLink("Go to teams", "Index", "Teams") </li>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+
+        
+
+       
+    </div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2 style="color:chartreuse">Trenduri</h2>
+        <p style="color:chartreuse">
+            Cele mai noi trenduri legate de lumea Dota2!
+        </p>
+        <p><a class="btn btn-default" href="https://www.dotabuff.com/heroes/trends">Am plecat &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2 style="color:chartreuse">Istoric trenduri</h2>
+        <p style="color:chartreuse">Trendurile globale de 3 luni</p>
+        <p><a class="btn btn-default" href="https://www.dotabuff.com/heroes/trends?date=3month">Trends 3 &raquo;</a></p>
+    </div>
+    
+</div>
