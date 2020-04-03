@@ -1,72 +1,110 @@
 ﻿@{
     ViewBag.Title = "Pagina principală";
 }
-<style>
-    img:hover   {opacity:0.5}
+    <style type="text/css">
+        .image-container {
+            background-image: url("img_nature.jpg"); /* The image used - important! */
+            background-size: cover;
+            position: relative; /* Needed to position the cutout text in the middle of the image */
+            height: 300px; /* Some height */
+        }
 
+        .text {
+            background-color: white;
+            color: black;
+            font-size: 10vw; /* Responsive font size */
+            font-weight: bold;
+            margin: 0 auto; /* Center the text container */
+            padding: 10px;
+            width: 50%;
+            text-align: center; /* Center text */
+            position: absolute; /* Position text */
+            top: 50%; /* Position text in the middle */
+            left: 50%; /* Position text in the middle */
+            transform: translate(-50%, -50%); /* Position text in the middle */
+            mix-blend-mode: screen; /* This makes the cutout text possible */
+        }
 
-</style>
-    <div class="jumbotron" style="background-color:transparent">
-        <div id="myCarousel" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#myCarousel" data-slide-to="0" class="active">
-                <li data-target="#myCarousel" data-slide-to="1">
-                <li data-target="#myCarousel" data-slide-to="2">
-                </li>
-            </ol>
-            <div class="carousel-inner">
-                <div class="item active">
-                    <img src="~/Content/Image/Dota_Ace_Blue.jpg" class="img-rounded" />
-                    <div class="container">
-                        <div class="carousel-caption">
-                            <h1>
-                                
-                            </h1>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <img src="~/Content/Image/Dota_Fire.jpg" />
-                    <div class="container">
-                        <div class="carousel-caption">
-                            <h1>
-                                <li>@Html.ActionLink("Go to player", "Index", "Players") </li>
-                            </h1>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <img src="~/Content/Image/Dota_Juggernaut_Front.jpg" />
-                    <div class="container">
-                        <div class="carousel-caption">
-                            <h1>
-                                <li>@Html.ActionLink("Go to teams", "Index", "Teams") </li>
-                            </h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
+        .jumbotron {
+            background-color: #8ee4af;
+            -moz-background-size: 100% 100%;
+        }
 
+        .flex-item {
+            justify-content: space-around;
+        }
 
-        
+        .container1 {
+            position: relative;
+            width: 50%;
+        }
 
-       
-    </div>
+        .text-block {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: black;
+            color: white;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
 
-<div class="row">
-    <div class="col-md-4">
-        <h2 style="color:chartreuse">Trenduri</h2>
-        <p style="color:chartreuse">
-            Cele mai noi trenduri legate de lumea Dota2!
-        </p>
-        <p><a class="btn btn-default" href="https://www.dotabuff.com/heroes/trends">Am plecat &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2 style="color:chartreuse">Istoric trenduri</h2>
-        <p style="color:chartreuse">Trendurile globale de 3 luni</p>
-        <p><a class="btn btn-default" href="https://www.dotabuff.com/heroes/trends?date=3month">Trends 3 &raquo;</a></p>
-    </div>
-    
-</div>
+        .middle {
+            transition: .5s ease;
+            opacity: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .container:hover .image {
+            opacity: 0.3;
+        }
+
+        .container:hover .middle {
+            opacity: 1;
+        }
+
+        .text {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            padding: 16px 32px;
+        }
+
+        .divider {
+            width: 160px;
+            height: auto;
+            display: inline-block;
+        }
+
+        .image {
+            border-radius: 4px;
+        }
+    </style>
+   <div class="jumbotron">
+       <div class="card-deck">
+           <div class="card">
+               <img class="card-img-top" src="~/Content/Image/Invoker.jpg" alt="Card image cap"height="300" width="350" />
+               <div class="middle">
+                   <a href="https://localhost:44346/Account/Login" class="btn btn-primary">Logare</a>
+
+               </div>
+           </div>
+     
+           <div class="divider">
+
+           </div>
+           
+           <div class="card" >
+               <img class="card-img-top"  src="~/Content/Image/Pa.jpg" alt="Card image cap" height="300" width="350" />
+               <div class="middle">
+                   <a href="https://localhost:44346/Account/Register" class="btn btn-primary">Registrare</a> 
+               </div>
+
+           </div>
+       </div>
+   </div>
+

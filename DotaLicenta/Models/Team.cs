@@ -9,7 +9,7 @@ namespace DotaLicenta.Models
 {
     public class Team
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
         public string Country { get; set; }
@@ -21,9 +21,9 @@ namespace DotaLicenta.Models
 
         [Display(Name = "Add Logo")]
         public string ImagePath { get; set; }
-         
-
-        public Player Player { get; set; }
-
+        public string Coach { get; set; } 
+        
+        public int PlayerId { get; set; }
+        public Player Players { get; set; }
     }
 }

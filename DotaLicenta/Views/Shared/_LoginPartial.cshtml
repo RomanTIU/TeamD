@@ -5,18 +5,24 @@
     {
     @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Salut " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+    <ul class="nav navbar-nav navbar-expand-sm mr-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="https://localhost:44346/Manage/Index">Salut @User.Identity.Name </a>
         </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Delogare</a></li>
+        <li><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Delogare</a></li>
     </ul>
     }
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Registrare", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Logare", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-    </ul>
+<ul class="nav navbar-nav navbar-expand-sm mr-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="https://localhost:44346/Account/Register">Registrare</a>
+    </li>
+   
+    <li class="nav-item">
+        <a class="nav-link" href="https://localhost:44346/Account/Login">Logare</a>
+    </li>
+    
+</ul>
 }

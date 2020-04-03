@@ -14,6 +14,7 @@ namespace DotaLicenta.Controllers
     public class PlayersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+         
 
         // GET: Players
         public ActionResult Index()
@@ -22,7 +23,7 @@ namespace DotaLicenta.Controllers
         }
 
         // GET: Players/Details/5
-        public ActionResult Details(Guid? id)
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -47,7 +48,7 @@ namespace DotaLicenta.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,NickName,FirstName,SurName,Email,Adress,Role,Rating,Age,ImagePath,Country,Nationality,City,AboutMe")] Player player, HttpPostedFileBase uploadImage)
+        public ActionResult Create([Bind(Include = "Id,NickName,FirstName,SurName,Email,Adress,Role,Rating,Age,ImagePath,Country,Nationality,City,AboutMe,Owner")] Player player,HttpPostedFileBase uploadImage)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +66,8 @@ namespace DotaLicenta.Controllers
                         return View();
                 }
                 else return View();
-                player.Id = Guid.NewGuid();
+
+                
                 db.Players.Add(player);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -74,9 +76,8 @@ namespace DotaLicenta.Controllers
             return View(player);
         }
 
-
         // GET: Players/Edit/5
-        public ActionResult Edit(Guid? id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -115,7 +116,6 @@ namespace DotaLicenta.Controllers
                 else return View();
 
 
-
                 db.Entry(player).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -124,7 +124,7 @@ namespace DotaLicenta.Controllers
         }
 
         // GET: Players/Delete/5
-        public ActionResult Delete(Guid? id)
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -141,7 +141,7 @@ namespace DotaLicenta.Controllers
         // POST: Players/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
+        public ActionResult DeleteConfirmed(int id)
         {
             Player player = db.Players.Find(id);
             db.Players.Remove(player);
@@ -149,19 +149,6 @@ namespace DotaLicenta.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult BioPlayer(Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Player player = db.Players.Find(id);
-            if (player == null)
-            {
-                return HttpNotFound();
-            }
-            return View(player);
-        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -17,11 +17,12 @@ namespace DotaLicenta.Controllers
         // GET: Teams
         public ActionResult Index()
         {
-            return View(db.Teams.ToList());
+            var teams = db.Teams.Include(t => t.Players);
+            return View(teams.ToList());
         }
 
         // GET: Teams/Details/5
-        public ActionResult Details(Guid? id)
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -36,27 +37,9 @@ namespace DotaLicenta.Controllers
         }
 
         // GET: Teams/Create
-        public ActionResult Create(int? id)
+        public ActionResult Create()
         {
-            var teamCreate = new Team();
-            if (id != null)
-            {
-                var a = db.Teams.Find(id);
-                if (a != null)
-                {
-                    teamCreate.ImagePath = a.ImagePath;
-                }
-
-                try
-                {
-                    var img = db.Teams.Find(teamCreate.Id);
-                    if (img != null) teamCreate.ImagePath = "~/Content/Image" + img.ImagePath;
-                }
-                catch
-                {
-                    return View("Error");
-                }
-            }
+            ViewBag.PlayerId = new SelectList(db.Players, "Id", "NickName");
             return View();
         }
 
@@ -65,7 +48,7 @@ namespace DotaLicenta.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Country,City")] Team team, HttpPostedFileBase uploadImage)
+        public ActionResult Create([Bind(Include = "Id,Name,Country,City,ImagePath,Coach,PlayerId")] Team team,HttpPostedFileBase uploadImage)
         {
             if (ModelState.IsValid)
             {
@@ -84,17 +67,18 @@ namespace DotaLicenta.Controllers
                 }
                 else return View();
 
-                team.Id = Guid.NewGuid();
+
                 db.Teams.Add(team);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
+            ViewBag.PlayerId = new SelectList(db.Players, "Id", "NickName", team.PlayerId);
             return View(team);
         }
 
         // GET: Teams/Edit/5
-        public ActionResult Edit(Guid? id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -105,6 +89,7 @@ namespace DotaLicenta.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.PlayerId = new SelectList(db.Players, "Id", "NickName", team.PlayerId);
             return View(team);
         }
 
@@ -113,19 +98,35 @@ namespace DotaLicenta.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Country,City")] Team team)
+        public ActionResult Edit([Bind(Include = "Id,Name,Country,City,ImagePath,Coach,PlayerId")] Team team,HttpPostedFileBase uploadImage)
         {
             if (ModelState.IsValid)
             {
+                if (uploadImage != null)
+                {
+                    if (uploadImage.ContentType == "image/jpg" ||
+                        uploadImage.ContentType == "image/png" ||
+                        uploadImage.ContentType == "image/jpeg" ||
+                        uploadImage.ContentType == "image/gif")
+                    {
+                        uploadImage.SaveAs(Server.MapPath("/") + "/Content/Image/" + uploadImage.FileName);
+                        team.ImagePath = uploadImage.FileName;
+                    }
+                    else
+                        return View();
+                }
+                else return View();
+
                 db.Entry(team).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.PlayerId = new SelectList(db.Players, "Id", "NickName", team.PlayerId);
             return View(team);
         }
 
         // GET: Teams/Delete/5
-        public ActionResult Delete(Guid? id)
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -142,26 +143,12 @@ namespace DotaLicenta.Controllers
         // POST: Teams/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
+        public ActionResult DeleteConfirmed(int id)
         {
             Team team = db.Teams.Find(id);
             db.Teams.Remove(team);
             db.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        public ActionResult Teamates (Guid id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Team team = db.Teams.Find(id);
-            if (team == null)
-            {
-                return HttpNotFound();
-            }
-            return View(team);
         }
 
         protected override void Dispose(bool disposing)
